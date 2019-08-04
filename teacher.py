@@ -5,6 +5,7 @@ from tkinter import (HORIZONTAL, LEFT, NW, Button, Label, PhotoImage, X,
 from tkinter.ttk import Progressbar
 
 class socket_windows () :
+
     def __init__(self) :
         self.do_lock_windows = False
         self.do_info_windows = False
@@ -42,6 +43,7 @@ class socket_windows () :
             self.runwindows.mainloop()
         else :
             messagebox.showerror("","It's locking now...")
+    
     def info (self) :
         if not(self.do_info_windows) :
             self.infowindows = tk.Toplevel()
@@ -51,23 +53,28 @@ class socket_windows () :
             def close_windows () :
                 self.do_info_windows = False
                 self.infowindows.destroy()
+            self.infowindows.protocol("WM_DELETE_WINDOW", close_windows)
+            if self.do_lock_windows == True :
+                self.info_locking = "locking: True"
+            else :
+                self.info_locking = "locking: False"
+            self.infolabel = Label(self.infowindows,text=self.info_locking,bg="gray", fg="red").pack(fill=X)
+            self.old_info_label = self.info_locking
         else :
             messagebox.showerror("", "It's showing ...")
         if self.do_lock_windows == True :
             self.info_locking = "locking: True"
         else :
             self.info_locking = "locking: False"
-        print(self.infolocking)
-        if old_info_label != self.info_locking :
-            self.infolabel = Label(self.infowindows,text=self.infolocking,bg="gray", fg="red").pack(fill=X)
+        if self.old_info_label != self.info_locking :
+            self.infolabel = Label(self.infowindows,text=self.info_locking,bg="gray", fg="red").pack(fill=X)
+            self.old_info_label = self.info_locking
+
     def cut_running(self) :
-        print("in_cut")
         if self.do_lock_windows == True :
-            print("can_cut")
             self.runwindows.destroy()
             self.do_lock_windows = False
         else :
-            print("can't_cut")
             messagebox.showerror("","no any windows to destroy ...")
 
 a = socket_windows()
