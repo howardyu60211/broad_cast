@@ -11,7 +11,7 @@ class socket_windows () :
         self.infoing_windows = False
         self.info_locking = ""
         self.root = tk.Tk()
-        self.root.title("<= 廣 播 系 統 =>")
+        self.root.title("< = 廣 播 系 統 = >")
         self.root.geometry("500x500+700+200")
         self.main_tools_label = Label(self.root,relief="raised").pack(anchor=NW, fill=X, pady=3)
         self.main_lock_pic = PhotoImage(file=r"pic\lock.png")
