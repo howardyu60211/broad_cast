@@ -24,8 +24,11 @@ class socket_windows () :
         self.main_info_buttom = Button(self.main_tools_label, image=self.main_info_pic, command = self.info).pack(side=LEFT,padx=10)
         self.main_tools_label.pack(anchor=NW, fill=X, pady=3)
         self.root.mainloop()
-        #self.connect_to_student = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #self.students_ip = self.connect_to_student.getpeername()
+        self.connect_to_student = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.connect_to_student.bind(socket.gethostname(), 80)
+        self.connect_to_student.listen(1)
+        while True:
+            (clientsocket, address) = self.connect_to_student.accept()
     
     def running(self) :
         if not(self.do_lock_windows) :
