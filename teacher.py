@@ -4,6 +4,7 @@ from tkinter import (HORIZONTAL, LEFT, NW, Button, Label, PhotoImage, X,
                      messagebox)
 from tkinter.ttk import Progressbar
 
+
 class socket_windows () :
 
     def __init__(self) :
@@ -23,8 +24,9 @@ class socket_windows () :
         self.main_info_buttom = Button(self.main_tools_label, image=self.main_info_pic, command = self.info).pack(side=LEFT,padx=10)
         self.main_tools_label.pack(anchor=NW, fill=X, pady=3)
         self.root.mainloop()
-        #self.connect_to_student = socket.socket
+        #self.connect_to_student = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #self.students_ip = self.connect_to_student.getpeername()
+    
     def running(self) :
         if not(self.do_lock_windows) :
             self.runwindows = tk.Toplevel()
