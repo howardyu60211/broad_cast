@@ -1,4 +1,5 @@
 import socket
+import threading
 import tkinter as tk
 from tkinter import (HORIZONTAL, LEFT, NW, Button, Label, PhotoImage, X,
                      messagebox)
@@ -23,13 +24,19 @@ class socket_windows () :
         self.main_lock_buttom = Button(self.main_tools_label, image=self.main_lock_pic, command = self.cut_running).pack(side=LEFT)
         self.main_info_buttom = Button(self.main_tools_label, image=self.main_info_pic, command = self.info).pack(side=LEFT,padx=10)
         self.main_tools_label.pack(anchor=NW, fill=X, pady=3)
-        self.root.mainloop()
+
+    def CTS (self) :
         self.connect_to_student = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.connect_to_student.bind(socket.gethostname(), 80)
+        self.connect_to_student.bind(('0.0.0.0', 8088))
+        print("bind sussesfully ...")
         self.connect_to_student.listen(1)
-        while True:
-            (clientsocket, address) = self.connect_to_student.accept()
-    
+        self.root.mainloop()
+        while True :
+            conn, addr = self.connect_to_student.accept()
+            # 接受數據
+            data = conn.recv(1024)
+            print("Student in %s has connect..." %(str(addr)))
+
     def running(self) :
         if not(self.do_lock_windows) :
             self.runwindows = tk.Toplevel()

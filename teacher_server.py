@@ -18,4 +18,4 @@ while True:
     if not data:
         print('客戶端斷開了')
     print(data)
-    # 關閉server
+    
