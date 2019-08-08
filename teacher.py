@@ -9,6 +9,7 @@ from tkinter.ttk import Progressbar
 class socket_windows () :
 
     def __init__(self) :
+        self.online_student_name = []
         self.do_lock_windows = False
         self.do_info_windows = False
         self.old_info_label = ""
@@ -20,9 +21,11 @@ class socket_windows () :
         self.main_lock_pic = PhotoImage(file=r"pic\lock.png")
         self.main_unlock_pic = PhotoImage(file=r"pic\unlock.png")
         self.main_info_pic = PhotoImage(file=r"pic\info.png")
+        self.main_socket_pic = PhotoImage(file=r"pic\socket.png")
         self.main_unlock_buttom = Button(self.main_tools_label, image=self.main_unlock_pic, command = self.running).pack(side=LEFT,padx=10)
         self.main_lock_buttom = Button(self.main_tools_label, image=self.main_lock_pic, command = self.cut_running).pack(side=LEFT)
         self.main_info_buttom = Button(self.main_tools_label, image=self.main_info_pic, command = self.info).pack(side=LEFT,padx=10)
+        self.main_socket_buttom = Button(self.main_tools_label, image=self.main_socket_pic, command=self.CTS).pack(side=LEFT)
         self.main_tools_label.pack(anchor=NW, fill=X, pady=3)
 
     def CTS (self) :
@@ -30,12 +33,13 @@ class socket_windows () :
         self.connect_to_student.bind(('0.0.0.0', 8088))
         print("bind sussesfully ...")
         self.connect_to_student.listen(1)
-        self.root.mainloop()
+        print("start connect ...")
         while True :
             conn, addr = self.connect_to_student.accept()
             # 接受數據
             data = conn.recv(1024)
-            print("Student in %s has connect..." %(str(addr)))
+            print("Student in %s has connect..." % (str(addr)))
+            self.online_student_name.append(str(addr))
 
     def running(self) :
         if not(self.do_lock_windows) :
